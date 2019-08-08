@@ -1,4 +1,12 @@
 class DatabaseCredential < ApplicationRecord
+  has_many :endpoints
+  validates :user, presence: true
+  validates :password, presence: true
+  validates :database, presence: true
+  validates :host, presence: true
+  validates :port, presence: true
+  validates :salt, presence: true
+
   def password
     encryptor.decrypt_and_verify(super)
   end

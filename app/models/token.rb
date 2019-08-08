@@ -1,4 +1,5 @@
 class Token < ApplicationRecord
-  validates :code, uniqueness: true
+  has_many :endpoints
+  validates :name, presence: true, uniqueness: true
   has_secure_token :code
 end

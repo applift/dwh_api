@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_07_082342) do
+ActiveRecord::Schema.define(version: 2019_08_08_080216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,17 @@ ActiveRecord::Schema.define(version: 2019_08_07_082342) do
     t.string "salt", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "endpoints", force: :cascade do |t|
+    t.text "query", null: false
+    t.bigint "token_id", null: false
+    t.bigint "database_credential_id", null: false
+    t.boolean "is_active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["database_credential_id"], name: "index_endpoints_on_database_credential_id"
+    t.index ["token_id"], name: "index_endpoints_on_token_id"
   end
 
   create_table "tokens", force: :cascade do |t|
