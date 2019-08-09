@@ -1,5 +1,7 @@
 module RemoteDatabase
   class Postgres
+    DEFAULT_TIMEOUT = 5
+
     def initialize(host, port, database_name, user, password)
       @host = host
       @port = port
@@ -14,7 +16,8 @@ module RemoteDatabase
         port: @port,
         dbname: @database_name,
         user: @user,
-        password: @password
+        password: @password,
+        connect_timeout: DEFAULT_TIMEOUT
       )
       connection.exec(query)
     end

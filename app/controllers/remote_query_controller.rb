@@ -6,8 +6,9 @@ class RemoteQueryController < ApplicationController
                  name: endpoint_params[:name],
                  tokens: { code: endpoint_params[:token] }
                )
-    return render json: { message: 'not found' }, status: 404 if endpoint.nil?
-    render json: { query: endpoint.query }
+
+    result = RemoteQueryService.new(endpoint).call
+    render json: result[:response], status: result[:status]
   end
 
   private
