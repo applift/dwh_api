@@ -1,6 +1,7 @@
 class RemoteQueryController < ApplicationController
   def show
     endpoint = Endpoint
+               .active
                .joins(:token)
                .find_by(
                  name: endpoint_params[:name],
