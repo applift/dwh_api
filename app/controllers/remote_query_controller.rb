@@ -11,13 +11,12 @@ class RemoteQueryController < ApplicationController
                )
     result = RemoteQueryService.new(endpoint).call
 
-    if endpoint_params['format'] == 'csv'
-      send_data to_csv(result[:response][:result]),
-                type: 'text/csv',
-                disposition: "filename=#{endpoint_params[:name]}.csv"
-    else
-      render json: result[:response], status: result[:status]
-    end
+    respond_to do |format|
+      format.csv { send_data to_csv(result[:response][:result]),
+                        type: 'text/csv',
+                        disposition: "filename=#{endpoint_params[:name]}.csv" }
+      format.json { render json: result[:response], status: result[:status] }
+      end
   end
 
   private
