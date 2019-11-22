@@ -1,4 +1,7 @@
 # DWH API
+
+![](/public/docs/img/diagram.png)
+
 DWH API is an application that creates dynamic REST API endpoints with configuration. User only need to connect to a database know how to write SQL and define the end points and permission.
 The solution allows Data warehouse managers (BI Managers, DBA, Data Engineers) full control on who access to their database without the need to provide database credentials. This application layer release the dependency in database modifications.
 
@@ -132,7 +135,7 @@ SELECT %{first_field} FROM USERS WHERE family_name=%{second_field};
 http://localhost:3000/api/qwerty?token=your_token&first_field=email&second_field=name is not null
 ```
 
-## Replaceable Fields: Hints for use
+### Replaceable Fields: Hints for use
 
 The input must be preceded by the percentage symbol and surrounded by curly brackets as such `%{field_name}` where field_name will be the call for the field.
 
