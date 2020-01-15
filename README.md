@@ -15,6 +15,8 @@ In this application the user can:
 
 (Current application support DWH based on postgres)
 
+# Services documentation:
+https://medium.com/engineering-applift/controlling-data-warehouse-consumers-via-dwh-api-d5ae2f5c584c
 
 # Table of contents
 
@@ -35,7 +37,7 @@ All parameters which are set as ENV variables are required, except `RAILS_MAX_TH
 
 Parameters description
 
-- DATABASE_HOST - Name of host to connect to, ```example '127.0.0.1'```
+- DATABASE_HOST - Name of host to connect to, ```example '127.0.0.1'```  ```this parameter will be 'postgres' inside docker container``` 
 - DATABASE_PORT - Port number to connect to at the server host, ```example '5432'```
 - DATABASE_USERNAME - PostgreSQL user name to connect as, ```example 'postgres'```
 - DATABASE_PASSWORD - Password to be used if the server demands password authentication, ```example 'postgres'```
@@ -132,6 +134,8 @@ URL for the app:
 - **Database credentials**: Define database access credentials
 
   ![](/public/docs/img/database_credentials.png)
+  
+  ![](/public/docs/img/db_creds.png)
 
 - **Endpoints**: Define an endpoint based on query. Select the database and create the SQL query 
 
@@ -158,6 +162,13 @@ Swagger documentation for available endpoints by token:
 ```
 http://localhost:3000/swagger_docs?token=your_token
 ```
+Where your_token is the token.code
+
+
+HTTP call:
+```
+GET http://localhost:3000/api/{your_endpoint}?token={your_token}
+```
 
 
 ## Parameterized query
@@ -172,6 +183,18 @@ SELECT %{first_field} FROM USERS WHERE family_name=%{second_field};
 - API call:
 ```
 http://localhost:3000/api/qwerty?token=your_token&first_field=email&second_field=name is not null
+```
+
+## Getting the schema
+
+- SQL:
+```
+select * from information_schema.tables where table_schema = 'public'
+```
+
+- API call:
+```
+http://localhost:3000/api/qwerty?token=your_token
 ```
 
 ### Replaceable Fields: Hints for use
@@ -193,11 +216,6 @@ where login = COALESCE (%{user_name}, login);
 ```
 
 Here we have set it up so that when no input is chosen, it will return all values in the database, and when a specific user name (aka login) is chosen, only their information will be returned. The API for both cases would thus look like this:
-
-For all:
-```
-http://localhost:3000/api/your_endpoint?token=your_token
-```
 
 For only “user”:
 ```

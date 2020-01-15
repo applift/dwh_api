@@ -11,6 +11,8 @@ services:
       - 5432:5432
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
+    environment:
+      POSTGRES_PASSWORD: postgres
 
   web:
     build: .
